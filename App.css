@@ -1,6 +1,6 @@
 /* Direct-box Sorting Visualizer — clean & simple (updated with search) */
 :root{
-  --bg:#91a90a; --card:#9330a768; --muted:#55607a; --accent:#2563eb;
+  --bg:#91c9d1; --card:#9330a768; --muted:#55607a; --accent:#2563eb;
 }
 *{box-sizing:border-box}
 body,html,#root{height:100%; margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial;}
@@ -15,10 +15,10 @@ body{ background:var(--bg); color:#0b1220; padding:28px; }
 .control-block{ display:flex; gap:8px; align-items:center; }
 .control-block .label{ font-size:12px; color:var(--muted); margin-right:6px; min-width:60px; }
 
-.controls select, .controls input[type="range"], .search-input{ padding:6px; border-radius:8px; border:1px solid rgba(2,6,23,0.06); }
+.controls select, .controls input[type="range"], .search-input{ padding:6px; border-radius:8px; border:1px solid rgba(15, 38, 139, 0.06); }
 .search-input{ width:72px; }
 
-.btn-row button{ margin-left:6px; padding:8px 10px; border-radius:8px; border:1px solid rgba(2,6,23,0.06); background:transparent; cursor:pointer; }
+.btn-row button{ margin-left:6px; padding:8px 10px; border-radius:8px; border:1px solid rgba(117, 50, 11, 0.669); background:transparent; cursor:pointer; }
 
 .boxes{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
 .box{ width:82px; background:var(--card); border-radius:8px; padding:8px; border:1px solid rgba(2,6,23,0.04); display:flex; flex-direction:column; align-items:center; gap:8px; }
@@ -29,6 +29,6 @@ body{ background:var(--bg); color:#0b1220; padding:28px; }
 
 .visual{ background:var(--card); padding:14px; border-radius:10px; border:1px solid rgba(2,6,23,0.04); box-shadow:0 12px 30px rgba(2,6,23,0.04); }
 .bar-row{ display:flex; gap:8px; align-items:flex-end; padding:8px; min-height:120px; }
-.vis-bar{ padding:10px 12px; background:linear-gradient(180deg,#3966aa,#1ba851); border-radius:8px; min-width:60px; text-align:center; transition:transform .18s ease, background .18s ease; box-shadow: inset 0 -6px 12px rgba(37,99,235,0.04); }
+.vis-bar{ padding:10px 12px; background:linear-gradient(180deg,#3966aa,#82a90e); border-radius:8px; min-width:60px; text-align:center; transition:transform .18s ease, background .18s ease; box-shadow: inset 0 -6px 12px rgba(146, 58, 2, 0.425); }
 .vis-bar.compare{ background: linear-gradient(180deg,#c3d711,#c91212); transform: translateY(-8px); }
-.vis-
+
