@@ -256,8 +256,21 @@ export default function App() {
         ))}
         <div className="box add-box" onClick={addBox}>+ Add</div>
       </section>
-      
+<br></br>
+<button onClick={() => setInputs([...inputs].sort((a,b)=>b-a))}>
+  Reverse<br></br>
+</button>
 
+     <button onClick={() => {
+  const a=[...inputs];
+  for(let i=0;i<3;i++){
+    const x=Math.floor(Math.random()*a.length);
+    const y=Math.floor(Math.random()*a.length);
+    [a[x],a[y]]=[a[y],a[x]];
+  }
+  setInputs(a);
+}}>Slight Shuffle</button>
+<br></br>
       <section className="visual">
         <div className="bar-row" role="list" aria-label="array visualization">
           {current.map((v, i) => {
@@ -265,8 +278,10 @@ export default function App() {
             const isSwap = highlight && highlight.type === "swap" && (highlight.i === i || highlight.j === i);
             const isFound = highlight && highlight.type === "found" && highlight.i === i;
             return (
-              <div key={i} className={`vis-bar ${isCompare ? "compare" : ""} ${isSwap ? "swap" : ""} ${isFound ? "found" : ""}`}>
-                <div className="val">{v}</div>
+              <div key={i}
+              className={`vis-bar ${isCompare ? "compare" : ""} ${isSwap ? "swap" : ""} ${isFound ? "found" : ""}`}
+              style={{ height: v * 9 + "px" }}>
+              <div className="val">{v}</div>
               </div>
             );
           })}
