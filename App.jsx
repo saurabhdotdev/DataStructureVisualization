@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 
-/* Sorting action generators (compare, swap) */
+
 function genBubble(arr) {
   const a = arr.slice();
   const actions = [];
@@ -34,7 +34,6 @@ function genSelection(arr) {
   return actions;
 }
 
-/* Search action generators */
 function genLinearSearch(arr, target) {
   const a = arr.slice();
   const actions = [];
@@ -45,12 +44,10 @@ function genLinearSearch(arr, target) {
       return actions;
     }
   }
-  // not found - push nothing else (you could push a 'notfound' action)
   return actions;
 }
 
 function genBinarySearch(arr, target) {
-  // expects arr is sorted (ascending)
   const a = arr.slice();
   const actions = [];
   let lo = 0, hi = a.length - 1;
@@ -69,24 +66,20 @@ function genBinarySearch(arr, target) {
   return actions;
 }
 
-/* App */
 export default function App() {
-  // editable boxes (direct input)
   const [inputs, setInputs] = useState([12, 4, 8, 1, 7]);
-  const [algorithm, setAlgorithm] = useState("bubble"); // sorting
-  const [actions, setActions] = useState([]); // queued actions
-  const [pos, setPos] = useState(0); // index in actions
+  const [algorithm, setAlgorithm] = useState("bubble"); 
+  const [actions, setActions] = useState([]); 
+  const [pos, setPos] = useState(0); 
   const [playing, setPlaying] = useState(false);
-  const [highlight, setHighlight] = useState(null); // {type,i,j}
-  const [current, setCurrent] = useState(inputs.slice()); // array during animation
+  const [highlight, setHighlight] = useState(null); 
+  const [current, setCurrent] = useState(inputs.slice()); 
   const speedRef = useRef(350);
   const timerRef = useRef(null);
-  const snapshotRef = useRef(inputs.slice()); // to reset
-
-  // search state
+  const snapshotRef = useRef(inputs.slice()); 
   const [searchTarget, setSearchTarget] = useState("");
   const [searchAlgo, setSearchAlgo] = useState("linear");
-  const [mode, setMode] = useState("sort"); // "sort" or "search"
+  const [mode, setMode] = useState("sort"); 
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -107,7 +100,6 @@ export default function App() {
     }
   }, [playing, pos, actions, speedRef.current]);
 
-  /* Sorting prepare (same as before) */
   function prepareSort() {
     setPlaying(false);
     setPos(0);
@@ -118,7 +110,7 @@ export default function App() {
     setMode("sort");
     setMessage(`Prepared ${gen.length} actions for ${algorithm}.`);
   }
-
+   
   function prepareSearch() {
     setPlaying(false);
     setPos(0);
@@ -129,14 +121,12 @@ export default function App() {
       setMessage("Enter a valid number to search.");
       return;
     }
-    // if binary and not sorted -> warn
+    
     if (searchAlgo === "binary") {
-      // quick check if sorted ascending
       let sorted = true;
       for (let i = 1; i < arr.length; i++) if (arr[i] < arr[i - 1]) { sorted = false; break; }
       if (!sorted) {
         setMessage("Array is not sorted — binary search requires sorted array.");
-        // still allow: sort first? keep simple: require sorted
         return;
       }
     }
@@ -160,7 +150,6 @@ export default function App() {
     setHighlight(act);
     setPos(p => p + 1);
 
-    // apply action
     setCurrent(prev => {
       const copy = prev.slice();
       if (act.type === "swap") {
@@ -205,43 +194,56 @@ export default function App() {
   return (
     <div className="svc-root">
       <header className="svc-header">
-        <div>
-          <h1>Sorting + Search </h1>
-          <div className="muted">Edit numbers</div>
-        </div>
 
-        <div className="controls">
+  <div style={{ marginBottom: "20px" }}>
+    <h1
+      style={{
+        fontSize: "32px",
+        marginBottom: "6px",
+        background: "linear-gradient(90deg, #4f46e5, #06b6d4)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        cursor:"pointer",
+        fontWeight: "700"   }}>
+      Sorting + Searching
+    </h1>
+  </div>
+
+  <div className="controls">
           <div className="control-block">
-            <div className="label">Sort algorithm</div>
+            <div className="label" style={{fontStyle:"italic", cursor:"pointer"}}>Sort algorithm</div>
+            <br>
+            </br>
             <select value={algorithm} onChange={e => setAlgorithm(e.target.value)}>
-              <option value="bubble">Bubble</option>
-              <option value="selection">Selection</option>
+              <option value="bubble" style={{cursor:"pointer"}}>Bubble</option>
+              <option value="selection" style={{cursor:"pointer"}}>Selection</option>
             </select>
             <button onClick={prepareSort}>Prepare Sort</button>
           </div>
-
           <div className="control-block">
-            <div className="label">Search</div>
+            <div className="label" style={{fontStyle:"italic", cursor:"pointer"}}>Search</div>
             <input className="search-input" placeholder="target" value={searchTarget} onChange={e => setSearchTarget(e.target.value)} />
             <select value={searchAlgo} onChange={e => setSearchAlgo(e.target.value)}>
               <option value="linear">Linear</option>
+              <br></br>
               <option value="binary">Binary (requires sorted array)</option>
             </select>
+            <br></br>
             <button onClick={prepareSearch}>Prepare Search</button>
           </div>
-
           <div className="control-block">
-            <div className="label">Speed</div>
-            <input type="range" min="80" max="800" defaultValue={350} onChange={e => { speedRef.current = Number(e.target.value); }} />
+            <div className="label" style={{fontStyle:"italic", cursor:"pointer"}}>Speed</div>
+            <input style={{cursor:"pointer"}} type="range" min="80" max="800" defaultValue={350} onChange={e => { speedRef.current = Number(e.target.value); }} />
           </div>
-
+<br></br>
           <div className="btn-row">
             <button onClick={playPause}>{playing ? "Pause" : "Play"}</button>
             <button onClick={() => stepForward()}>Step</button>
             <button onClick={resetAll}>Reset</button>
           </div>
         </div>
-      </header>
+      </header><br></br>
+ <button style ={{alignItems:"anchor-center"}}>Sum: {current.reduce((a,b)=>a+b,0)}</button >
 
       <section className="boxes">
         {inputs.map((val, i) => (
@@ -254,6 +256,7 @@ export default function App() {
         ))}
         <div className="box add-box" onClick={addBox}>+ Add</div>
       </section>
+      
 
       <section className="visual">
         <div className="bar-row" role="list" aria-label="array visualization">
@@ -270,9 +273,15 @@ export default function App() {
         </div>
 
         <div className="status">
-          <div>Mode: {mode} • Actions: {actions.length}</div>
+         
+          <div>Mode: {mode} <br></br>Actions: {actions.length}</div>
           <div>Step: {pos}/{actions.length}</div>
+          <div>Length: {current.length}</div> 
           <div className="message">{message}</div>
+          <div>Action: {highlight?.type || "none"}</div>
+          <div>Algorithm: {algorithm}</div>
+          <div>Current Mode: {mode}</div>
+
         </div>
       </section>
 
